@@ -1,0 +1,467 @@
+[
+  {
+    "material_id": "mp-1244933",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 1793.7649376717561,
+    "density": 2.599954373928591,
+    "nsites": 100,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 0.34929145859999905,
+    "energy_above_hull": 0.34929145859999905,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750321",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-1120447",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 163.06526777122875,
+    "density": 2.288019789495501,
+    "nsites": 8,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 0.37250966749999903,
+    "energy_above_hull": 0.37250966749999903,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750451",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-1244971",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 1921.0737732472721,
+    "density": 2.427656376577443,
+    "nsites": 100,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0030999999999990003,
+    "formation_energy_per_atom": 0.31675151759999903,
+    "energy_above_hull": 0.31675151760000003,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750525",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-1244990",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 1750.9728471941326,
+    "density": 2.6634947554856963,
+    "nsites": 100,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 0.36627406769999904,
+    "energy_above_hull": 0.36627406770000004,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750587",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-1245242",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 1915.2205726555178,
+    "density": 2.435075657647642,
+    "nsites": 100,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 0.31691021609999803,
+    "energy_above_hull": 0.31691021610000003,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750646",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-1245041",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 1918.192245426189,
+    "density": 2.431303226576872,
+    "nsites": 100,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.027599999999999004,
+    "formation_energy_per_atom": 0.310314400899999,
+    "energy_above_hull": 0.310314400899999,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750703",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-1403870",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 174.1076902939462,
+    "density": 2.142906835476681,
+    "nsites": 8,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 1.250752009999999,
+    "energy_above_hull": 1.250752009999999,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750761",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-644693",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 174.10767849877462,
+    "density": 2.142906980650944,
+    "nsites": 8,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 0.41511927999999904,
+    "energy_above_hull": 0.41511927999999904,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750824",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-676011",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 159.13142937906494,
+    "density": 2.344581212497035,
+    "nsites": 8,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 0.44703532249999905,
+    "energy_above_hull": 0.44703532249999905,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750882",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-988210",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 174.1076902939462,
+    "density": 2.142906835476681,
+    "nsites": 8,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 1.9596229937499992,
+    "energy_above_hull": 1.9596229937499992,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.750966",
+    "crystal_system": {
+      "_value_": "Triclinic",
+      "_name_": "tri",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 0
+    },
+    "space_group": null,
+    "point_group": "1",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-1079297",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 167.23079840226276,
+    "density": 2.231027796342244,
+    "nsites": 8,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.2735,
+    "formation_energy_per_atom": 0.08220610625000001,
+    "energy_above_hull": 0.08220610625000001,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.751025",
+    "crystal_system": {
+      "_value_": "Monoclinic",
+      "_name_": "mono",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 1
+    },
+    "space_group": null,
+    "point_group": "2/m",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-1204046",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 2445.0737122623686,
+    "density": 2.021832466823777,
+    "nsites": 106,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.15080000000000002,
+    "formation_energy_per_atom": 0.178885465377357,
+    "energy_above_hull": 0.178885465377357,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.751080",
+    "crystal_system": {
+      "_value_": "Tetragonal",
+      "_name_": "tet",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 3
+    },
+    "space_group": null,
+    "point_group": "4/mmm",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-1056579",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 13.978871817111228,
+    "density": 3.336254210293773,
+    "nsites": 1,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 0.48407213000000104,
+    "energy_above_hull": 0.48407213000000104,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.751134",
+    "crystal_system": {
+      "_value_": "Tetragonal",
+      "_name_": "tet",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 3
+    },
+    "space_group": null,
+    "point_group": "4/mmm",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-999200",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 85.03542034009838,
+    "density": 2.193771478683577,
+    "nsites": 4,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.439799999999999,
+    "formation_energy_per_atom": 0.11663319999999901,
+    "energy_above_hull": 0.11663319999999901,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.751188",
+    "crystal_system": {
+      "_value_": "Tetragonal",
+      "_name_": "tet",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 3
+    },
+    "space_group": null,
+    "point_group": "4/mmm",
+    "query_type": "elements_Si"
+  },
+  {
+    "material_id": "mp-92",
+    "formula_pretty": "Si",
+    "formula_anonymous": null,
+    "chemsys": null,
+    "volume": 29.899999100890987,
+    "density": 3.119536545645218,
+    "nsites": 2,
+    "elements": [
+      "Si"
+    ],
+    "band_gap": 0.0,
+    "formation_energy_per_atom": 0.28873980000000005,
+    "energy_above_hull": 0.28873980000000005,
+    "energy_per_atom": null,
+    "is_stable": false,
+    "theoretical": null,
+    "cbm": null,
+    "vbm": null,
+    "is_gap_direct": null,
+    "collected_at": "2025-11-15T11:56:45.751243",
+    "crystal_system": {
+      "_value_": "Tetragonal",
+      "_name_": "tet",
+      "__objclass__": "{'_generate_next_value_': <function Enum._generate_next_value_ at 0x7fcee427b380>, '__module__': 'emmet.core.symmetry', '__doc__': '\\n    The crystal system of the lattice\\n    ', '_new_member_': <built-in method __new__ of type object at 0x55795a7c7e20>, '_use_args_': False, '_member_names_': ['tri', 'mono', 'ortho', 'tet', 'trig', 'hex_', 'cubic'], '_member_map_': {'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>}, '_value2member_map_': {'Triclinic': <CrystalSystem.tri: 'Triclinic'>, 'Monoclinic': <CrystalSystem.mono: 'Monoclinic'>, 'Orthorhombic': <CrystalSystem.ortho: 'Orthorhombic'>, 'Tetragonal': <CrystalSystem.tet: 'Tetragonal'>, 'Trigonal': <CrystalSystem.trig: 'Trigonal'>, 'Hexagonal': <CrystalSystem.hex_: 'Hexagonal'>, 'Cubic': <CrystalSystem.cubic: 'Cubic'>}, '_unhashable_values_': [], '_member_type_': <class 'object'>, '_value_repr_': None, 'tri': <CrystalSystem.tri: 'Triclinic'>, 'mono': <CrystalSystem.mono: 'Monoclinic'>, 'ortho': <CrystalSystem.ortho: 'Orthorhombic'>, 'tet': <CrystalSystem.tet: 'Tetragonal'>, 'trig': <CrystalSystem.trig: 'Trigonal'>, 'hex_': <CrystalSystem.hex_: 'Hexagonal'>, 'cubic': <CrystalSystem.cubic: 'Cubic'>, '__new__': <function Enum.__new__ at 0x7fcee427b240>}",
+      "_sort_order_": 3
+    },
+    "space_group": null,
+    "point_group": "4/mmm",
+    "query_type": "elements_Si"
+  }
+]
