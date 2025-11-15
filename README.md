@@ -558,7 +558,7 @@ def main():
 ## 📞 Support
 
 For questions or issues:
-- 📧 Email: [your-email@jhu.edu]
+- 📧 Email: [yicao.alina@gmail.com]
 - 🐛 Issues: [GitHub Issues](link-to-issues)
 - 📖 Docs: [Full Documentation](link-to-docs)
 
@@ -568,4 +568,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-*Built with ❤️ for materials science research at Johns Hopkins University*
+*Built with ❤️ for computatianal materials research at Johns Hopkins University*

@@ -1,0 +1,1092 @@
+=================================================================
+Materials Project Database Query Results
+=================================================================
+Database: dbase.cs.jhu.edu/FA25_ycao73_db
+SQL File: 3-sql-tasks.sql
+Execution Date: Sat Nov 15 04:01:51 PM EST 2025
+=================================================================
+
+--------------
+SELECT 
+    crystal_system,
+    COUNT(*) as material_count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap,
+    ROUND(AVG(formation_energy_per_atom), 3) as avg_formation_energy_eV_per_atom,
+    ROUND(STDDEV(band_gap), 3) as stddev_band_gap,
+    ROUND(STDDEV(formation_energy_per_atom), 3) as stddev_formation_energy
+FROM materials 
+WHERE crystal_system IS NOT NULL 
+    AND band_gap IS NOT NULL 
+    AND formation_energy_per_atom IS NOT NULL
+GROUP BY crystal_system
+ORDER BY material_count DESC, avg_band_gap DESC
+--------------
+
++----------------+----------------+--------------+----------------------------------+-----------------+-------------------------+
+| crystal_system | material_count | avg_band_gap | avg_formation_energy_eV_per_atom | stddev_band_gap | stddev_formation_energy |
++----------------+----------------+--------------+----------------------------------+-----------------+-------------------------+
+| Triclinic      |             12 |        0.377 |                            0.238 |           0.873 |                   1.024 |
+| Cubic          |             10 |        1.571 |                           -1.326 |           1.387 |                   1.265 |
+| Monoclinic     |              8 |        1.775 |                           -0.714 |           0.956 |                   0.867 |
+| Tetragonal     |              7 |        1.128 |                           -0.816 |           1.167 |                   1.456 |
+| Trigonal       |              3 |        3.108 |                           -2.257 |           2.130 |                   0.829 |
+| Orthorhombic   |              3 |        1.355 |                           -0.111 |           0.211 |                   0.697 |
+| Hexagonal      |              2 |        2.158 |                           -1.236 |           0.431 |                   0.565 |
++----------------+----------------+--------------+----------------------------------+-----------------+-------------------------+
+--------------
+SELECT 
+    crystal_system,
+    COUNT(*) as material_count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap,
+    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM materials WHERE crystal_system IS NOT NULL), 1) as percentage_of_total
+FROM materials 
+WHERE crystal_system IS NOT NULL
+GROUP BY crystal_system
+HAVING COUNT(*) > 5
+ORDER BY material_count DESC
+--------------
+
++----------------+----------------+--------------+---------------------+
+| crystal_system | material_count | avg_band_gap | percentage_of_total |
++----------------+----------------+--------------+---------------------+
+| Triclinic      |             12 |        0.377 |                26.7 |
+| Cubic          |             10 |        1.571 |                22.2 |
+| Monoclinic     |              8 |        1.775 |                17.8 |
+| Tetragonal     |              7 |        1.128 |                15.6 |
++----------------+----------------+--------------+---------------------+
+--------------
+SELECT 
+    crystal_system,
+    COUNT(*) as material_count,
+    CASE 
+        WHEN COUNT(*) >= 10 THEN 'High'
+        WHEN COUNT(*) >= 5 THEN 'Medium' 
+        ELSE 'Low'
+    END as frequency_category
+FROM materials 
+WHERE crystal_system IS NOT NULL
+GROUP BY crystal_system
+ORDER BY material_count DESC
+--------------
+
++----------------+----------------+--------------------+
+| crystal_system | material_count | frequency_category |
++----------------+----------------+--------------------+
+| Triclinic      |             12 | High               |
+| Cubic          |             10 | High               |
+| Monoclinic     |              8 | Medium             |
+| Tetragonal     |              7 | Medium             |
+| Orthorhombic   |              3 | Low                |
+| Trigonal       |              3 | Low                |
+| Hexagonal      |              2 | Low                |
++----------------+----------------+--------------------+
+--------------
+SELECT 
+    nelements,
+    COUNT(*) as material_count,
+    ROUND(MIN(formation_energy_per_atom), 3) as most_stable_formation_energy,
+    ROUND(AVG(formation_energy_per_atom), 3) as avg_formation_energy,
+    ROUND(MAX(formation_energy_per_atom), 3) as least_stable_formation_energy,
+    ROUND(STDDEV(formation_energy_per_atom), 3) as stddev_formation_energy,
+    COUNT(CASE WHEN is_stable = 1 THEN 1 END) as stable_materials_count,
+    ROUND(100.0 * COUNT(CASE WHEN is_stable = 1 THEN 1 END) / COUNT(*), 1) as stability_percentage
+FROM materials 
+WHERE nelements BETWEEN 1 AND 6 
+    AND formation_energy_per_atom IS NOT NULL
+GROUP BY nelements
+ORDER BY nelements
+--------------
+
++-----------+----------------+------------------------------+----------------------+-------------------------------+-------------------------+------------------------+----------------------+
+| nelements | material_count | most_stable_formation_energy | avg_formation_energy | least_stable_formation_energy | stddev_formation_energy | stable_materials_count | stability_percentage |
++-----------+----------------+------------------------------+----------------------+-------------------------------+-------------------------+------------------------+----------------------+
+|         1 |             17 |                        0.000 |                0.427 |                         1.960 |                   0.469 |                      2 |                 11.8 |
+|         2 |              9 |                       -3.508 |               -1.970 |                        -0.347 |                   1.182 |                      8 |                 88.9 |
+|         3 |              9 |                       -3.139 |               -1.778 |                         0.268 |                   1.074 |                      4 |                 44.4 |
+|         4 |              7 |                       -1.600 |               -0.494 |                         0.873 |                   0.679 |                      3 |                 42.9 |
+|         5 |              1 |                       -0.780 |               -0.780 |                        -0.780 |                   0.000 |                      0 |                  0.0 |
+|         6 |              2 |                       -0.434 |               -0.340 |                        -0.246 |                   0.094 |                      0 |                  0.0 |
++-----------+----------------+------------------------------+----------------------+-------------------------------+-------------------------+------------------------+----------------------+
+--------------
+SELECT 
+    nelements,
+    material_id,
+    formula_pretty,
+    formation_energy_per_atom,
+    crystal_system,
+    is_stable
+FROM materials m1
+WHERE formation_energy_per_atom = (
+    SELECT MIN(formation_energy_per_atom)
+    FROM materials m2 
+    WHERE m2.nelements = m1.nelements 
+        AND formation_energy_per_atom IS NOT NULL
+)
+    AND nelements BETWEEN 1 AND 6
+ORDER BY nelements
+--------------
+
++-----------+-------------+-------------------+---------------------------+----------------+-----------+
+| nelements | material_id | formula_pretty    | formation_energy_per_atom | crystal_system | is_stable |
++-----------+-------------+-------------------+---------------------------+----------------+-----------+
+|         1 | mp-149      | Si                |                         0 | Cubic          |         1 |
+|         1 | mp-13       | Fe                |                         0 | Cubic          |         1 |
+|         2 | mp-390      | TiO2              |                  -3.50806 | Tetragonal     |         1 |
+|         3 | mp-866101   | AcCrO3            |                  -3.13897 | Cubic          |         1 |
+|         4 | mp-1196546  | Ag2Ge(S2O7)3      |                  -1.59995 | Trigonal       |         1 |
+|         5 | mp-723002   | Ag2H12S(NO)4      |                 -0.779673 | Tetragonal     |         0 |
+|         6 | mp-1202797  | Ag2H12C3S3(BrN3)2 |                 -0.433622 | Monoclinic     |         0 |
++-----------+-------------+-------------------+---------------------------+----------------+-----------+
+--------------
+SELECT 
+    COUNT(*) as te_materials_count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap_eV,
+    ROUND(MIN(band_gap), 3) as min_band_gap_eV,
+    ROUND(MAX(band_gap), 3) as max_band_gap_eV,
+    ROUND(STDDEV(band_gap), 3) as stddev_band_gap
+FROM materials 
+WHERE elements LIKE '%Te%' 
+    AND band_gap IS NOT NULL
+--------------
+
++--------------------+-----------------+-----------------+-----------------+-----------------+
+| te_materials_count | avg_band_gap_eV | min_band_gap_eV | max_band_gap_eV | stddev_band_gap |
++--------------------+-----------------+-----------------+-----------------+-----------------+
+|                  1 |           1.593 |           1.593 |           1.593 |           0.000 |
++--------------------+-----------------+-----------------+-----------------+-----------------+
+--------------
+SELECT 
+    material_id,
+    formula_pretty,
+    elements,
+    band_gap,
+    crystal_system,
+    formation_energy_per_atom
+FROM materials 
+WHERE elements LIKE '%Te%'
+    AND band_gap IS NOT NULL
+ORDER BY band_gap DESC
+--------------
+
++-------------+----------------+----------+----------+----------------+---------------------------+
+| material_id | formula_pretty | elements | band_gap | crystal_system | formation_energy_per_atom |
++-------------+----------------+----------+----------+----------------+---------------------------+
+| mp-1000     | BaTe           | Ba,Te    |    1.593 | Cubic          |                  -2.00357 |
++-------------+----------------+----------+----------+----------------+---------------------------+
+--------------
+SELECT 
+    'Te-containing' as material_type,
+    COUNT(*) as count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap
+FROM materials 
+WHERE elements LIKE '%Te%' AND band_gap IS NOT NULL
+UNION ALL
+SELECT 
+    'All materials' as material_type,
+    COUNT(*) as count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap
+FROM materials 
+WHERE band_gap IS NOT NULL
+--------------
+
++---------------+-------+--------------+
+| material_type | count | avg_band_gap |
++---------------+-------+--------------+
+| Te-containing |     1 |        1.593 |
+| All materials |    45 |        1.334 |
++---------------+-------+--------------+
+--------------
+WITH avg_bandgap AS (
+    SELECT AVG(band_gap) as db_avg_bandgap
+    FROM materials 
+    WHERE band_gap IS NOT NULL
+)
+SELECT 
+    m.material_id,
+    m.formula_pretty,
+    m.band_gap,
+    ROUND(a.db_avg_bandgap, 3) as database_avg_bandgap,
+    ROUND(m.band_gap - a.db_avg_bandgap, 3) as difference_from_avg,
+    m.crystal_system,
+    m.formation_energy_per_atom,
+    m.is_stable
+FROM materials m
+CROSS JOIN avg_bandgap a
+WHERE m.band_gap > a.db_avg_bandgap
+    AND m.band_gap IS NOT NULL
+ORDER BY m.band_gap DESC
+--------------
+
++-------------+-------------------+----------+----------------------+---------------------+----------------+---------------------------+-----------+
+| material_id | formula_pretty    | band_gap | database_avg_bandgap | difference_from_avg | crystal_system | formation_energy_per_atom | is_stable |
++-------------+-------------------+----------+----------------------+---------------------+----------------+---------------------------+-----------+
+| mp-1143     | Al2O3             |   5.8537 |                1.334 |               4.520 | Trigonal       |                  -3.42655 |         1 |
+| mp-1265     | MgO               |   4.4292 |                1.334 |               3.095 | Cubic          |                  -3.03831 |         1 |
+| mp-723002   | Ag2H12S(NO)4      |   2.9514 |                1.334 |               1.617 | Tetragonal     |                 -0.779673 |         0 |
+| mp-1247866  | Ag2B8O13          |   2.9324 |                1.334 |               1.598 | Monoclinic     |                  -2.50324 |         0 |
+| mp-1183053  | AcGaO3            |   2.8959 |                1.334 |               1.562 | Cubic          |                  -3.06325 |         1 |
+| mp-759792   | Ag2B8O13          |    2.858 |                1.334 |               1.524 | Triclinic      |                  -2.49911 |         0 |
+| mp-1196546  | Ag2Ge(S2O7)3      |   2.8072 |                1.334 |               1.473 | Trigonal       |                  -1.59995 |         1 |
+| mp-1202797  | Ag2H12C3S3(BrN3)2 |   2.7767 |                1.334 |               1.443 | Monoclinic     |                 -0.433622 |         0 |
+| mp-567334   | Ag(BCl)6          |   2.7028 |                1.334 |               1.369 | Cubic          |                 -0.736951 |         1 |
+| mp-861867   | AcI3              |   2.5892 |                1.334 |               1.255 | Hexagonal      |                    -1.801 |         1 |
+| mp-680067   | Ag2CSNClO4        |   2.5318 |                1.334 |               1.198 | Monoclinic     |                  -0.24644 |         0 |
+| mp-778019   | Ag2H16O9          |   2.5301 |                1.334 |               1.196 | Monoclinic     |                  -1.09587 |         0 |
+| mp-32800    | Ac2S3             |   2.2962 |                1.334 |               0.962 | Tetragonal     |                  -2.49306 |         1 |
+| mp-390      | TiO2              |   2.0586 |                1.334 |               0.725 | Tetragonal     |                  -3.50806 |         1 |
+| mp-866101   | AcCrO3            |   2.0031 |                1.334 |               0.669 | Cubic          |                  -3.13897 |         1 |
+| mp-804      | GaN               |   1.7265 |                1.334 |               0.392 | Hexagonal      |                 -0.670049 |         1 |
+| mp-559071   | Ag2Bi2S3Cl2       |   1.6368 |                1.334 |               0.303 | Triclinic      |                   -0.7483 |         0 |
+| mp-556345   | Ag2BrNO3          |   1.6045 |                1.334 |               0.270 | Orthorhombic   |                  -0.65507 |         0 |
+| mp-1000     | BaTe              |    1.593 |                1.334 |               0.259 | Cubic          |                  -2.00357 |         1 |
+| mp-861942   | Ag2GePbS4         |   1.3699 |                1.334 |               0.036 | Orthorhombic   |                 -0.550359 |         1 |
++-------------+-------------------+----------+----------------------+---------------------+----------------+---------------------------+-----------+
+--------------
+SELECT 
+    COUNT(*) as above_avg_count,
+    (SELECT COUNT(*) FROM materials WHERE band_gap IS NOT NULL) as total_with_bandgap,
+    ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM materials WHERE band_gap IS NOT NULL), 1) as percentage_above_avg,
+    (SELECT ROUND(AVG(band_gap), 3) FROM materials WHERE band_gap IS NOT NULL) as database_avg_bandgap
+FROM materials 
+WHERE band_gap > (SELECT AVG(band_gap) FROM materials WHERE band_gap IS NOT NULL)
+--------------
+
++-----------------+--------------------+----------------------+----------------------+
+| above_avg_count | total_with_bandgap | percentage_above_avg | database_avg_bandgap |
++-----------------+--------------------+----------------------+----------------------+
+|              20 |                 45 |                 44.4 |                1.334 |
++-----------------+--------------------+----------------------+----------------------+
+--------------
+SELECT 
+    material_id,
+    formula_pretty,
+    elements,
+    band_gap,
+    formation_energy_per_atom,
+    crystal_system,
+    nelements,
+    is_stable
+FROM materials 
+WHERE elements LIKE '%Sb%' 
+    AND elements LIKE '%Te%'
+ORDER BY band_gap DESC
+--------------
+
+--------------
+SELECT 
+    COUNT(*) as sb_te_materials_count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap,
+    ROUND(AVG(formation_energy_per_atom), 3) as avg_formation_energy,
+    COUNT(CASE WHEN is_stable = 1 THEN 1 END) as stable_count
+FROM materials 
+WHERE elements LIKE '%Sb%' 
+    AND elements LIKE '%Te%'
+--------------
+
++-----------------------+--------------+----------------------+--------------+
+| sb_te_materials_count | avg_band_gap | avg_formation_energy | stable_count |
++-----------------------+--------------+----------------------+--------------+
+|                     0 |         NULL |                 NULL |            0 |
++-----------------------+--------------+----------------------+--------------+
+--------------
+SELECT 'Sb-containing' as type, COUNT(*) as count
+FROM materials WHERE elements LIKE '%Sb%'
+UNION ALL
+SELECT 'Te-containing' as type, COUNT(*) as count  
+FROM materials WHERE elements LIKE '%Te%'
+UNION ALL
+SELECT 'Sb+Te both' as type, COUNT(*) as count
+FROM materials WHERE elements LIKE '%Sb%' AND elements LIKE '%Te%'
+--------------
+
++---------------+-------+
+| type          | count |
++---------------+-------+
+| Sb-containing |     0 |
+| Te-containing |     1 |
+| Sb+Te both    |     0 |
++---------------+-------+
+--------------
+SELECT 
+    material_id,
+    formula_pretty,
+    elements,
+    band_gap,
+    formation_energy_per_atom,
+    crystal_system,
+    nelements,
+    is_stable,
+    CASE 
+        WHEN band_gap > 5.0 THEN 'Ultra-wide gap'
+        WHEN band_gap > 4.0 THEN 'Very wide gap'  
+        ELSE 'Wide gap'
+    END as gap_category
+FROM materials 
+WHERE band_gap > 3.0 
+    AND (elements NOT LIKE '%O%' OR elements IS NULL)
+    AND band_gap IS NOT NULL
+ORDER BY band_gap DESC
+--------------
+
+--------------
+SELECT 
+    COUNT(*) as wide_gap_no_oxygen_count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap,
+    ROUND(MIN(band_gap), 3) as min_band_gap,
+    ROUND(MAX(band_gap), 3) as max_band_gap,
+    COUNT(CASE WHEN is_stable = 1 THEN 1 END) as stable_count
+FROM materials 
+WHERE band_gap > 3.0 
+    AND (elements NOT LIKE '%O%' OR elements IS NULL)
+--------------
+
++--------------------------+--------------+--------------+--------------+--------------+
+| wide_gap_no_oxygen_count | avg_band_gap | min_band_gap | max_band_gap | stable_count |
++--------------------------+--------------+--------------+--------------+--------------+
+|                        0 |         NULL |         NULL |         NULL |            0 |
++--------------------------+--------------+--------------+--------------+--------------+
+--------------
+SELECT 
+    'Without O' as material_type,
+    COUNT(*) as count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap
+FROM materials 
+WHERE band_gap > 3.0 AND (elements NOT LIKE '%O%' OR elements IS NULL)
+UNION ALL
+SELECT 
+    'All wide gap' as material_type,
+    COUNT(*) as count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap
+FROM materials 
+WHERE band_gap > 3.0
+--------------
+
++---------------+-------+--------------+
+| material_type | count | avg_band_gap |
++---------------+-------+--------------+
+| Without O     |     0 |         NULL |
+| All wide gap  |     2 |        5.141 |
++---------------+-------+--------------+
+--------------
+WITH ranked AS (
+  SELECT
+    m.material_id,
+    m.formula_pretty,
+    m.crystal_system,
+    m.formation_energy_per_atom,
+    m.band_gap,
+    m.is_stable,
+    
+    COUNT(*) OVER (PARTITION BY m.crystal_system) AS total_materials_in_system,
+    
+    ROW_NUMBER() OVER (PARTITION BY m.crystal_system ORDER BY m.formation_energy_per_atom) AS rn,
+    
+    GREATEST(1, CEIL(0.10 * COUNT(*) OVER (PARTITION BY m.crystal_system))) AS bottom_10_count
+  FROM materials m
+  WHERE m.crystal_system IS NOT NULL
+    AND m.formation_energy_per_atom IS NOT NULL
+),
+p10_values AS (
+  
+  SELECT
+    crystal_system,
+    ROUND(MAX(formation_energy_per_atom), 3) AS p10_formation_energy,
+    total_materials_in_system
+  FROM ranked
+  WHERE rn <= bottom_10_count
+  GROUP BY crystal_system, total_materials_in_system
+)
+SELECT
+  r.material_id,
+  r.formula_pretty,
+  r.crystal_system,
+  r.formation_energy_per_atom,
+  p.p10_formation_energy AS system_10th_percentile,
+  r.band_gap,
+  r.is_stable,
+  r.total_materials_in_system
+FROM ranked r
+JOIN p10_values p ON r.crystal_system = p.crystal_system
+WHERE r.total_materials_in_system >= 3
+  
+  AND r.rn <= r.bottom_10_count
+ORDER BY r.crystal_system, r.formation_energy_per_atom
+--------------
+
++-------------+----------------+----------------+---------------------------+------------------------+----------+-----------+---------------------------+
+| material_id | formula_pretty | crystal_system | formation_energy_per_atom | system_10th_percentile | band_gap | is_stable | total_materials_in_system |
++-------------+----------------+----------------+---------------------------+------------------------+----------+-----------+---------------------------+
+| mp-866101   | AcCrO3         | Cubic          |                  -3.13897 |                 -3.139 |   2.0031 |         1 |                        10 |
+| mp-1247866  | Ag2B8O13       | Monoclinic     |                  -2.50324 |                 -2.503 |   2.9324 |         0 |                         8 |
+| mp-556345   | Ag2BrNO3       | Orthorhombic   |                  -0.65507 |                 -0.655 |   1.6045 |         0 |                         3 |
+| mp-390      | TiO2           | Tetragonal     |                  -3.50806 |                 -3.508 |   2.0586 |         1 |                         7 |
+| mp-759792   | Ag2B8O13       | Triclinic      |                  -2.49911 |                 -0.748 |    2.858 |         0 |                        12 |
+| mp-559071   | Ag2Bi2S3Cl2    | Triclinic      |                   -0.7483 |                 -0.748 |   1.6368 |         0 |                        12 |
+| mp-1143     | Al2O3          | Trigonal       |                  -3.42655 |                 -3.427 |   5.8537 |         1 |                         3 |
++-------------+----------------+----------------+---------------------------+------------------------+----------+-----------+---------------------------+
+--------------
+WITH most_stable_per_system AS (
+    SELECT 
+        crystal_system,
+        MIN(formation_energy_per_atom) as min_formation_energy
+    FROM materials 
+    WHERE crystal_system IS NOT NULL 
+        AND formation_energy_per_atom IS NOT NULL
+    GROUP BY crystal_system
+)
+SELECT 
+    m.crystal_system,
+    m.material_id,
+    m.formula_pretty,
+    m.formation_energy_per_atom as most_stable_formation_energy,
+    m.band_gap,
+    m.energy_above_hull,
+    m.is_stable,
+    m.nelements,
+    COUNT(*) OVER (PARTITION BY m.crystal_system) as total_materials_in_system
+FROM materials m
+JOIN most_stable_per_system ms ON m.crystal_system = ms.crystal_system 
+    AND m.formation_energy_per_atom = ms.min_formation_energy
+ORDER BY m.formation_energy_per_atom, m.crystal_system
+--------------
+
++----------------+-------------+----------------+------------------------------+----------+-------------------+-----------+-----------+---------------------------+
+| crystal_system | material_id | formula_pretty | most_stable_formation_energy | band_gap | energy_above_hull | is_stable | nelements | total_materials_in_system |
++----------------+-------------+----------------+------------------------------+----------+-------------------+-----------+-----------+---------------------------+
+| Tetragonal     | mp-390      | TiO2           |                     -3.50806 |   2.0586 |                 0 |         1 |         2 |                         1 |
+| Trigonal       | mp-1143     | Al2O3          |                     -3.42655 |   5.8537 |                 0 |         1 |         2 |                         1 |
+| Cubic          | mp-866101   | AcCrO3         |                     -3.13897 |   2.0031 |                 0 |         1 |         3 |                         1 |
+| Monoclinic     | mp-1247866  | Ag2B8O13       |                     -2.50324 |   2.9324 |        0.00741192 |         0 |         3 |                         1 |
+| Triclinic      | mp-759792   | Ag2B8O13       |                     -2.49911 |    2.858 |         0.0115485 |         0 |         3 |                         1 |
+| Hexagonal      | mp-861867   | AcI3           |                       -1.801 |   2.5892 |                 0 |         1 |         2 |                         1 |
+| Orthorhombic   | mp-556345   | Ag2BrNO3       |                     -0.65507 |   1.6045 |          0.019581 |         0 |         4 |                         1 |
++----------------+-------------+----------------+------------------------------+----------+-------------------+-----------+-----------+---------------------------+
+--------------
+WITH ranked AS (
+  SELECT 
+    crystal_system,
+    material_id,
+    formula_pretty,
+    formation_energy_per_atom,
+    band_gap,
+    is_stable,
+    ROW_NUMBER() OVER (PARTITION BY crystal_system
+                       ORDER BY formation_energy_per_atom) AS stability_rank
+  FROM materials
+  WHERE crystal_system IS NOT NULL
+    AND formation_energy_per_atom IS NOT NULL
+)
+SELECT
+  crystal_system,
+  material_id,
+  formula_pretty,
+  formation_energy_per_atom,
+  band_gap,
+  is_stable,
+  stability_rank
+FROM ranked
+WHERE stability_rank = 1
+ORDER BY crystal_system, formation_energy_per_atom
+--------------
+
++----------------+-------------+----------------+---------------------------+----------+-----------+----------------+
+| crystal_system | material_id | formula_pretty | formation_energy_per_atom | band_gap | is_stable | stability_rank |
++----------------+-------------+----------------+---------------------------+----------+-----------+----------------+
+| Cubic          | mp-866101   | AcCrO3         |                  -3.13897 |   2.0031 |         1 |              1 |
+| Hexagonal      | mp-861867   | AcI3           |                    -1.801 |   2.5892 |         1 |              1 |
+| Monoclinic     | mp-1247866  | Ag2B8O13       |                  -2.50324 |   2.9324 |         0 |              1 |
+| Orthorhombic   | mp-556345   | Ag2BrNO3       |                  -0.65507 |   1.6045 |         0 |              1 |
+| Tetragonal     | mp-390      | TiO2           |                  -3.50806 |   2.0586 |         1 |              1 |
+| Triclinic      | mp-759792   | Ag2B8O13       |                  -2.49911 |    2.858 |         0 |              1 |
+| Trigonal       | mp-1143     | Al2O3          |                  -3.42655 |   5.8537 |         1 |              1 |
++----------------+-------------+----------------+---------------------------+----------+-----------+----------------+
+--------------
+SELECT 
+    material_id,
+    formula_pretty,
+    crystal_system,
+    band_gap as material_band_gap,
+    ROUND(AVG(band_gap) OVER (PARTITION BY crystal_system), 3) as system_avg_band_gap,
+    ROUND(band_gap - AVG(band_gap) OVER (PARTITION BY crystal_system), 3) as difference_from_system_avg,
+    CASE 
+        WHEN band_gap > AVG(band_gap) OVER (PARTITION BY crystal_system) + STDDEV(band_gap) OVER (PARTITION BY crystal_system) 
+        THEN 'High outlier'
+        WHEN band_gap > AVG(band_gap) OVER (PARTITION BY crystal_system) 
+        THEN 'Above average'
+        WHEN band_gap < AVG(band_gap) OVER (PARTITION BY crystal_system) - STDDEV(band_gap) OVER (PARTITION BY crystal_system) 
+        THEN 'Low outlier'
+        ELSE 'Below average'
+    END as band_gap_category,
+    formation_energy_per_atom,
+    is_stable
+FROM materials 
+WHERE crystal_system IS NOT NULL 
+    AND band_gap IS NOT NULL
+ORDER BY crystal_system, ABS(band_gap - AVG(band_gap) OVER (PARTITION BY crystal_system)) DESC
+--------------
+
++-------------+-------------------+----------------+-------------------+---------------------+----------------------------+-------------------+---------------------------+-----------+
+| material_id | formula_pretty    | crystal_system | material_band_gap | system_avg_band_gap | difference_from_system_avg | band_gap_category | formation_energy_per_atom | is_stable |
++-------------+-------------------+----------------+-------------------+---------------------+----------------------------+-------------------+---------------------------+-----------+
+| mp-1265     | MgO               | Cubic          |            4.4292 |               1.571 |                      2.858 | High outlier      |                  -3.03831 |         1 |
+| mp-13       | Fe                | Cubic          |                 0 |               1.571 |                     -1.571 | Low outlier       |                         0 |         1 |
+| mp-571      | TiNi              | Cubic          |                 0 |               1.571 |                     -1.571 | Low outlier       |                 -0.347361 |         0 |
+| mp-2534     | GaAs              | Cubic          |            0.1861 |               1.571 |                     -1.385 | Below average     |                 -0.446277 |         1 |
+| mp-1183053  | AcGaO3            | Cubic          |            2.8959 |               1.571 |                      1.325 | Above average     |                  -3.06325 |         1 |
+| mp-567334   | Ag(BCl)6          | Cubic          |            2.7028 |               1.571 |                      1.132 | Above average     |                 -0.736951 |         1 |
+| mp-149      | Si                | Cubic          |            0.6105 |               1.571 |                     -0.960 | Below average     |                         0 |         1 |
+| mp-866101   | AcCrO3            | Cubic          |            2.0031 |               1.571 |                      0.432 | Above average     |                  -3.13897 |         1 |
+| mp-560328   | Ag15P4S16Cl3      | Cubic          |            1.2888 |               1.571 |                     -0.282 | Below average     |                 -0.481953 |         1 |
+| mp-1000     | BaTe              | Cubic          |             1.593 |               1.571 |                      0.022 | Above average     |                  -2.00357 |         1 |
+| mp-861867   | AcI3              | Hexagonal      |            2.5892 |               2.158 |                      0.431 | Above average     |                    -1.801 |         1 |
+| mp-804      | GaN               | Hexagonal      |            1.7265 |               2.158 |                     -0.431 | Below average     |                 -0.670049 |         1 |
+| mp-1079297  | Si                | Monoclinic     |            0.2735 |               1.775 |                     -1.501 | Low outlier       |                 0.0822061 |         0 |
+| mp-1247866  | Ag2B8O13          | Monoclinic     |            2.9324 |               1.775 |                      1.158 | High outlier      |                  -2.50324 |         0 |
+| mp-1202797  | Ag2H12C3S3(BrN3)2 | Monoclinic     |            2.7767 |               1.775 |                      1.002 | High outlier      |                 -0.433622 |         0 |
+| mp-574486   | Ag2CN2            | Monoclinic     |            1.0037 |               1.775 |                     -0.771 | Below average     |                   0.26804 |         0 |
+| mp-680067   | Ag2CSNClO4        | Monoclinic     |            2.5318 |               1.775 |                      0.757 | Above average     |                  -0.24644 |         0 |
+| mp-778019   | Ag2H16O9          | Monoclinic     |            2.5301 |               1.775 |                      0.755 | Above average     |                  -1.09587 |         0 |
+| mp-554988   | Ag2Ge2O5          | Monoclinic     |            1.0401 |               1.775 |                     -0.735 | Below average     |                  -1.48543 |         0 |
+| mp-1215118  | Ag16HgAs4S15      | Monoclinic     |            1.1099 |               1.775 |                     -0.665 | Below average     |                 -0.294171 |         0 |
+| mp-1199990  | Ag2C4I3N          | Orthorhombic   |            1.0895 |               1.355 |                     -0.265 | Low outlier       |                  0.873306 |         0 |
+| mp-556345   | Ag2BrNO3          | Orthorhombic   |            1.6045 |               1.355 |                      0.250 | High outlier      |                  -0.65507 |         0 |
+| mp-861942   | Ag2GePbS4         | Orthorhombic   |            1.3699 |               1.355 |                      0.015 | Above average     |                 -0.550359 |         1 |
+| mp-723002   | Ag2H12S(NO)4      | Tetragonal     |            2.9514 |               1.128 |                      1.823 | High outlier      |                 -0.779673 |         0 |
+| mp-32800    | Ac2S3             | Tetragonal     |            2.2962 |               1.128 |                      1.168 | High outlier      |                  -2.49306 |         1 |
+| mp-92       | Si                | Tetragonal     |                 0 |               1.128 |                     -1.128 | Below average     |                   0.28874 |         0 |
+| mp-1056579  | Si                | Tetragonal     |                 0 |               1.128 |                     -1.128 | Below average     |                  0.484072 |         0 |
+| mp-1204046  | Si                | Tetragonal     |            0.1508 |               1.128 |                     -0.977 | Below average     |                  0.178885 |         0 |
+| mp-390      | TiO2              | Tetragonal     |            2.0586 |               1.128 |                      0.930 | Above average     |                  -3.50806 |         1 |
+| mp-999200   | Si                | Tetragonal     |            0.4398 |               1.128 |                     -0.688 | Below average     |                  0.116633 |         0 |
+| mp-759792   | Ag2B8O13          | Triclinic      |             2.858 |               0.377 |                      2.481 | High outlier      |                  -2.49911 |         0 |
+| mp-559071   | Ag2Bi2S3Cl2       | Triclinic      |            1.6368 |               0.377 |                      1.260 | High outlier      |                   -0.7483 |         0 |
+| mp-1244990  | Si                | Triclinic      |                 0 |               0.377 |                     -0.377 | Below average     |                  0.366274 |         0 |
+| mp-1120447  | Si                | Triclinic      |                 0 |               0.377 |                     -0.377 | Below average     |                   0.37251 |         0 |
+| mp-676011   | Si                | Triclinic      |                 0 |               0.377 |                     -0.377 | Below average     |                  0.447035 |         0 |
+| mp-1403870  | Si                | Triclinic      |                 0 |               0.377 |                     -0.377 | Below average     |                   1.25075 |         0 |
+| mp-1245242  | Si                | Triclinic      |                 0 |               0.377 |                     -0.377 | Below average     |                   0.31691 |         0 |
+| mp-1244933  | Si                | Triclinic      |                 0 |               0.377 |                     -0.377 | Below average     |                  0.349291 |         0 |
+| mp-988210   | Si                | Triclinic      |                 0 |               0.377 |                     -0.377 | Below average     |                   1.95962 |         0 |
+| mp-644693   | Si                | Triclinic      |                 0 |               0.377 |                     -0.377 | Below average     |                  0.415119 |         0 |
+| mp-1244971  | Si                | Triclinic      |            0.0031 |               0.377 |                     -0.374 | Below average     |                  0.316752 |         0 |
+| mp-1245041  | Si                | Triclinic      |            0.0276 |               0.377 |                     -0.350 | Below average     |                  0.310314 |         0 |
+| mp-1143     | Al2O3             | Trigonal       |            5.8537 |               3.108 |                      2.746 | High outlier      |                  -3.42655 |         1 |
+| mp-22526    | LiCoO2            | Trigonal       |            0.6623 |               3.108 |                     -2.445 | Low outlier       |                  -1.74566 |         1 |
+| mp-1196546  | Ag2Ge(S2O7)3      | Trigonal       |            2.8072 |               3.108 |                     -0.301 | Below average     |                  -1.59995 |         1 |
++-------------+-------------------+----------------+-------------------+---------------------+----------------------------+-------------------+---------------------------+-----------+
+--------------
+SELECT 
+    material_id,
+    formula_pretty,
+    elements,
+    band_gap,
+    crystal_system,
+    formation_energy_per_atom,
+    is_stable,
+    ROW_NUMBER() OVER (ORDER BY band_gap DESC) as band_gap_rank,
+    DENSE_RANK() OVER (ORDER BY band_gap DESC) as band_gap_dense_rank,
+    NTILE(4) OVER (ORDER BY band_gap DESC) as band_gap_quartile
+FROM materials 
+WHERE (elements LIKE '%Rb%' OR elements LIKE '%Sr%' OR elements LIKE '%Y%' OR 
+       elements LIKE '%Zr%' OR elements LIKE '%Nb%' OR elements LIKE '%Mo%' OR 
+       elements LIKE '%Ru%' OR elements LIKE '%Rh%' OR elements LIKE '%Pd%' OR 
+       elements LIKE '%Ag%' OR elements LIKE '%Cd%' OR elements LIKE '%In%' OR 
+       elements LIKE '%Sn%' OR elements LIKE '%Sb%' OR elements LIKE '%Te%' OR 
+       elements LIKE '%I%')
+    AND band_gap IS NOT NULL
+ORDER BY band_gap DESC
+--------------
+
++-------------+-------------------+---------------+----------+----------------+---------------------------+-----------+---------------+---------------------+-------------------+
+| material_id | formula_pretty    | elements      | band_gap | crystal_system | formation_energy_per_atom | is_stable | band_gap_rank | band_gap_dense_rank | band_gap_quartile |
++-------------+-------------------+---------------+----------+----------------+---------------------------+-----------+---------------+---------------------+-------------------+
+| mp-723002   | Ag2H12S(NO)4      | Ag,H,N,O,S    |   2.9514 | Tetragonal     |                 -0.779673 |         0 |             1 |                   1 |                 1 |
+| mp-1247866  | Ag2B8O13          | Ag,B,O        |   2.9324 | Monoclinic     |                  -2.50324 |         0 |             2 |                   2 |                 1 |
+| mp-759792   | Ag2B8O13          | Ag,B,O        |    2.858 | Triclinic      |                  -2.49911 |         0 |             3 |                   3 |                 1 |
+| mp-1196546  | Ag2Ge(S2O7)3      | Ag,Ge,O,S     |   2.8072 | Trigonal       |                  -1.59995 |         1 |             4 |                   4 |                 1 |
+| mp-1202797  | Ag2H12C3S3(BrN3)2 | Ag,Br,C,H,N,S |   2.7767 | Monoclinic     |                 -0.433622 |         0 |             5 |                   5 |                 1 |
+| mp-567334   | Ag(BCl)6          | Ag,B,Cl       |   2.7028 | Cubic          |                 -0.736951 |         1 |             6 |                   6 |                 1 |
+| mp-861867   | AcI3              | Ac,I          |   2.5892 | Hexagonal      |                    -1.801 |         1 |             7 |                   7 |                 1 |
+| mp-680067   | Ag2CSNClO4        | Ag,C,Cl,N,O,S |   2.5318 | Monoclinic     |                  -0.24644 |         0 |             8 |                   8 |                 1 |
+| mp-778019   | Ag2H16O9          | Ag,H,O        |   2.5301 | Monoclinic     |                  -1.09587 |         0 |             9 |                   9 |                 1 |
+| mp-390      | TiO2              | O,Ti          |   2.0586 | Tetragonal     |                  -3.50806 |         1 |            10 |                  10 |                 1 |
+| mp-559071   | Ag2Bi2S3Cl2       | Ag,Bi,Cl,S    |   1.6368 | Triclinic      |                   -0.7483 |         0 |            11 |                  11 |                 2 |
+| mp-556345   | Ag2BrNO3          | Ag,Br,N,O     |   1.6045 | Orthorhombic   |                  -0.65507 |         0 |            12 |                  12 |                 2 |
+| mp-1000     | BaTe              | Ba,Te         |    1.593 | Cubic          |                  -2.00357 |         1 |            13 |                  13 |                 2 |
+| mp-861942   | Ag2GePbS4         | Ag,Ge,Pb,S    |   1.3699 | Orthorhombic   |                 -0.550359 |         1 |            14 |                  14 |                 2 |
+| mp-560328   | Ag15P4S16Cl3      | Ag,Cl,P,S     |   1.2888 | Cubic          |                 -0.481953 |         1 |            15 |                  15 |                 2 |
+| mp-1215118  | Ag16HgAs4S15      | Ag,As,Hg,S    |   1.1099 | Monoclinic     |                 -0.294171 |         0 |            16 |                  16 |                 2 |
+| mp-1199990  | Ag2C4I3N          | Ag,C,I,N      |   1.0895 | Orthorhombic   |                  0.873306 |         0 |            17 |                  17 |                 2 |
+| mp-554988   | Ag2Ge2O5          | Ag,Ge,O       |   1.0401 | Monoclinic     |                  -1.48543 |         0 |            18 |                  18 |                 2 |
+| mp-574486   | Ag2CN2            | Ag,C,N        |   1.0037 | Monoclinic     |                   0.26804 |         0 |            19 |                  19 |                 2 |
+| mp-22526    | LiCoO2            | Co,Li,O       |   0.6623 | Trigonal       |                  -1.74566 |         1 |            20 |                  20 |                 3 |
+| mp-149      | Si                | Si            |   0.6105 | Cubic          |                         0 |         1 |            21 |                  21 |                 3 |
+| mp-999200   | Si                | Si            |   0.4398 | Tetragonal     |                  0.116633 |         0 |            22 |                  22 |                 3 |
+| mp-1079297  | Si                | Si            |   0.2735 | Monoclinic     |                 0.0822061 |         0 |            23 |                  23 |                 3 |
+| mp-1204046  | Si                | Si            |   0.1508 | Tetragonal     |                  0.178885 |         0 |            24 |                  24 |                 3 |
+| mp-1245041  | Si                | Si            |   0.0276 | Triclinic      |                  0.310314 |         0 |            25 |                  25 |                 3 |
+| mp-1244971  | Si                | Si            |   0.0031 | Triclinic      |                  0.316752 |         0 |            26 |                  26 |                 3 |
+| mp-571      | TiNi              | Ni,Ti         |        0 | Cubic          |                 -0.347361 |         0 |            27 |                  27 |                 3 |
+| mp-1244933  | Si                | Si            |        0 | Triclinic      |                  0.349291 |         0 |            28 |                  27 |                 3 |
+| mp-1120447  | Si                | Si            |        0 | Triclinic      |                   0.37251 |         0 |            29 |                  27 |                 4 |
+| mp-1244990  | Si                | Si            |        0 | Triclinic      |                  0.366274 |         0 |            30 |                  27 |                 4 |
+| mp-1245242  | Si                | Si            |        0 | Triclinic      |                   0.31691 |         0 |            31 |                  27 |                 4 |
+| mp-1403870  | Si                | Si            |        0 | Triclinic      |                   1.25075 |         0 |            32 |                  27 |                 4 |
+| mp-644693   | Si                | Si            |        0 | Triclinic      |                  0.415119 |         0 |            33 |                  27 |                 4 |
+| mp-676011   | Si                | Si            |        0 | Triclinic      |                  0.447035 |         0 |            34 |                  27 |                 4 |
+| mp-988210   | Si                | Si            |        0 | Triclinic      |                   1.95962 |         0 |            35 |                  27 |                 4 |
+| mp-1056579  | Si                | Si            |        0 | Tetragonal     |                  0.484072 |         0 |            36 |                  27 |                 4 |
+| mp-92       | Si                | Si            |        0 | Tetragonal     |                   0.28874 |         0 |            37 |                  27 |                 4 |
++-------------+-------------------+---------------+----------+----------------+---------------------------+-----------+---------------+---------------------+-------------------+
+--------------
+SELECT 
+    '5th period elements' as element_group,
+    COUNT(*) as material_count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap,
+    ROUND(MIN(band_gap), 3) as min_band_gap,
+    ROUND(MAX(band_gap), 3) as max_band_gap
+FROM materials 
+WHERE (elements LIKE '%Rb%' OR elements LIKE '%Sr%' OR elements LIKE '%Y%' OR 
+       elements LIKE '%Zr%' OR elements LIKE '%Nb%' OR elements LIKE '%Mo%' OR 
+       elements LIKE '%Ru%' OR elements LIKE '%Rh%' OR elements LIKE '%Pd%' OR 
+       elements LIKE '%Ag%' OR elements LIKE '%Cd%' OR elements LIKE '%In%' OR 
+       elements LIKE '%Sn%' OR elements LIKE '%Sb%' OR elements LIKE '%Te%' OR 
+       elements LIKE '%I%')
+    AND band_gap IS NOT NULL
+--------------
+
++---------------------+----------------+--------------+--------------+--------------+
+| element_group       | material_count | avg_band_gap | min_band_gap | max_band_gap |
++---------------------+----------------+--------------+--------------+--------------+
+| 5th period elements |             37 |        1.098 |        0.000 |        2.951 |
++---------------------+----------------+--------------+--------------+--------------+
+--------------
+SELECT 
+    material_id,
+    formula_pretty,
+    formation_energy_per_atom,
+    density,
+    ROUND(AVG(density) OVER (
+        ORDER BY formation_energy_per_atom 
+        ROWS BETWEEN 2 PRECEDING AND 2 FOLLOWING
+    ), 3) as moving_avg_density_5pt,
+    ROUND(AVG(density) OVER (
+        ORDER BY formation_energy_per_atom 
+        ROWS BETWEEN 1 PRECEDING AND 1 FOLLOWING  
+    ), 3) as moving_avg_density_3pt,
+    ROW_NUMBER() OVER (ORDER BY formation_energy_per_atom) as energy_rank,
+    crystal_system,
+    band_gap
+FROM materials 
+WHERE formation_energy_per_atom IS NOT NULL 
+    AND density IS NOT NULL
+ORDER BY formation_energy_per_atom
+--------------
+
++-------------+----------------+---------------------------+---------+------------------------+------------------------+-------------+----------------+----------+
+| material_id | formula_pretty | formation_energy_per_atom | density | moving_avg_density_5pt | moving_avg_density_3pt | energy_rank | crystal_system | band_gap |
++-------------+----------------+---------------------------+---------+------------------------+------------------------+-------------+----------------+----------+
+| mp-390      | TiO2           |                  -3.50806 | 3.85614 |                  3.786 |                  3.865 |           1 | Tetragonal     |   2.0586 |
+| mp-1143     | Al2O3          |                  -3.42655 |  3.8735 |                  4.074 |                  3.786 |           2 | Trigonal       |   5.8537 |
+| mp-1265     | MgO            |                  -3.03831 |  3.6289 |                  4.284 |                  4.147 |           3 | Cubic          |   4.4292 |
+| mp-1000     | BaTe           |                  -2.00357 | 4.93772 |                  4.729 |                  4.563 |           4 | Cubic          |    1.593 |
+| mp-22526    | LiCoO2         |                  -1.74566 | 5.12143 |                  4.964 |                  5.380 |           5 | Trigonal       |   0.6623 |
+| mp-804      | GaN            |                 -0.670049 | 6.08098 |                  5.565 |                  5.419 |           6 | Hexagonal      |   1.7265 |
+| mp-2534     | GaAs           |                 -0.446277 |  5.0532 |                  6.158 |                  5.922 |           7 | Cubic          |   0.1861 |
+| mp-571      | TiNi           |                 -0.347361 | 6.63246 |                  5.596 |                  6.530 |           8 | Cubic          |        0 |
+| mp-13       | Fe             |                         0 | 7.90286 |                  4.826 |                  5.616 |           9 | Cubic          |        0 |
+| mp-149      | Si             |                         0 |  2.3128 |                  4.255 |                  4.149 |          10 | Cubic          |   0.6105 |
+| mp-1079297  | Si             |                 0.0822061 | 2.23103 |                  3.332 |                  2.246 |          11 | Monoclinic     |   0.2735 |
+| mp-999200   | Si             |                  0.116633 | 2.19377 |                  2.376 |                  2.149 |          12 | Tetragonal     |   0.4398 |
+| mp-1204046  | Si             |                  0.178885 | 2.02183 |                  2.399 |                  2.445 |          13 | Tetragonal     |   0.1508 |
+| mp-92       | Si             |                   0.28874 | 3.11954 |                  2.439 |                  2.524 |          14 | Tetragonal     |        0 |
+| mp-1245041  | Si             |                  0.310314 |  2.4313 |                  2.487 |                  2.659 |          15 | Triclinic      |   0.0276 |
+| mp-1244971  | Si             |                  0.316752 | 2.42766 |                  2.603 |                  2.431 |          16 | Triclinic      |   0.0031 |
+| mp-1245242  | Si             |                   0.31691 | 2.43508 |                  2.511 |                  2.488 |          17 | Triclinic      |        0 |
+| mp-1244933  | Si             |                  0.349291 | 2.59995 |                  2.483 |                  2.566 |          18 | Triclinic      |        0 |
+| mp-1244990  | Si             |                  0.366274 | 2.66349 |                  2.426 |                  2.517 |          19 | Triclinic      |        0 |
+| mp-1120447  | Si             |                   0.37251 | 2.28802 |                  2.408 |                  2.365 |          20 | Triclinic      |        0 |
+| mp-644693   | Si             |                  0.415119 | 2.14291 |                  2.555 |                  2.259 |          21 | Triclinic      |        0 |
+| mp-676011   | Si             |                  0.447035 | 2.34458 |                  2.451 |                  2.608 |          22 | Triclinic      |        0 |
+| mp-1056579  | Si             |                  0.484072 | 3.33625 |                  2.422 |                  2.608 |          23 | Tetragonal     |        0 |
+| mp-1403870  | Si             |                   1.25075 | 2.14291 |                  2.492 |                  2.541 |          24 | Triclinic      |        0 |
+| mp-988210   | Si             |                   1.95962 | 2.14291 |                  2.541 |                  2.143 |          25 | Triclinic      |        0 |
++-------------+----------------+---------------------------+---------+------------------------+------------------------+-------------+----------------+----------+
+--------------
+WITH bucketed AS (
+    SELECT
+        NTILE(5) OVER (ORDER BY formation_energy_per_atom) AS energy_quintile,
+        formation_energy_per_atom,
+        density
+    FROM materials
+    WHERE formation_energy_per_atom IS NOT NULL
+      AND density IS NOT NULL
+)
+SELECT
+    energy_quintile,
+    COUNT(*) AS material_count,
+    ROUND(AVG(formation_energy_per_atom), 3) AS avg_formation_energy,
+    ROUND(AVG(density), 3) AS avg_density,
+    ROUND(MIN(density), 3) AS min_density,
+    ROUND(MAX(density), 3) AS max_density,
+    ROUND(STDDEV(density), 3) AS stddev_density
+FROM bucketed
+GROUP BY energy_quintile
+ORDER BY energy_quintile
+--------------
+
++-----------------+----------------+----------------------+-------------+-------------+-------------+----------------+
+| energy_quintile | material_count | avg_formation_energy | avg_density | min_density | max_density | stddev_density |
++-----------------+----------------+----------------------+-------------+-------------+-------------+----------------+
+|               1 |              5 |               -2.744 |       4.284 |       3.629 |       5.121 |          0.618 |
+|               2 |              5 |               -0.293 |       5.596 |       2.313 |       7.903 |          1.882 |
+|               3 |              5 |                0.195 |       2.399 |       2.022 |       3.120 |          0.383 |
+|               4 |              5 |                0.344 |       2.483 |       2.288 |       2.663 |          0.134 |
+|               5 |              5 |                0.911 |       2.422 |       2.143 |       3.336 |          0.464 |
++-----------------+----------------+----------------------+-------------+-------------+-------------+----------------+
+--------------
+WITH element_counts AS (
+    SELECT 
+        TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(elements, ',', numbers.n), ',', -1)) as element,
+        COUNT(*) as frequency
+    FROM materials
+    CROSS JOIN (
+        SELECT 1 n UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL 
+        SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL
+        SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL SELECT 10
+    ) numbers
+    WHERE CHAR_LENGTH(elements) - CHAR_LENGTH(REPLACE(elements, ',', '')) >= numbers.n - 1
+        AND elements IS NOT NULL
+        AND TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(elements, ',', numbers.n), ',', -1)) != ''
+    GROUP BY TRIM(SUBSTRING_INDEX(SUBSTRING_INDEX(elements, ',', numbers.n), ',', -1))
+)
+SELECT 
+    element,
+    frequency as material_count,
+    ROUND(100.0 * frequency / (SELECT COUNT(*) FROM materials WHERE elements IS NOT NULL), 2) as percentage,
+    DENSE_RANK() OVER (ORDER BY frequency DESC) as popularity_rank
+FROM element_counts
+WHERE element != ''
+ORDER BY frequency DESC, element
+--------------
+
++---------+----------------+------------+-----------------+
+| element | material_count | percentage | popularity_rank |
++---------+----------------+------------+-----------------+
+| Ag      |             16 |      35.56 |               1 |
+| Si      |             16 |      35.56 |               1 |
+| O       |             14 |      31.11 |               2 |
+| S       |              9 |      20.00 |               3 |
+| N       |              7 |      15.56 |               4 |
+| Ac      |              4 |       8.89 |               5 |
+| C       |              4 |       8.89 |               5 |
+| Cl      |              4 |       8.89 |               5 |
+| B       |              3 |       6.67 |               6 |
+| Ga      |              3 |       6.67 |               6 |
+| Ge      |              3 |       6.67 |               6 |
+| H       |              3 |       6.67 |               6 |
+| As      |              2 |       4.44 |               7 |
+| Br      |              2 |       4.44 |               7 |
+| I       |              2 |       4.44 |               7 |
+| Ti      |              2 |       4.44 |               7 |
+| Al      |              1 |       2.22 |               8 |
+| Ba      |              1 |       2.22 |               8 |
+| Bi      |              1 |       2.22 |               8 |
+| Co      |              1 |       2.22 |               8 |
+| Cr      |              1 |       2.22 |               8 |
+| Fe      |              1 |       2.22 |               8 |
+| Hg      |              1 |       2.22 |               8 |
+| Li      |              1 |       2.22 |               8 |
+| Mg      |              1 |       2.22 |               8 |
+| Ni      |              1 |       2.22 |               8 |
+| P       |              1 |       2.22 |               8 |
+| Pb      |              1 |       2.22 |               8 |
+| Te      |              1 |       2.22 |               8 |
++---------+----------------+------------+-----------------+
+--------------
+SELECT 
+    'Si' as element, COUNT(*) as frequency FROM materials WHERE elements LIKE '%Si%'
+UNION ALL SELECT 'O', COUNT(*) FROM materials WHERE elements LIKE '%O%'
+UNION ALL SELECT 'Al', COUNT(*) FROM materials WHERE elements LIKE '%Al%'
+UNION ALL SELECT 'Fe', COUNT(*) FROM materials WHERE elements LIKE '%Fe%'
+UNION ALL SELECT 'Ti', COUNT(*) FROM materials WHERE elements LIKE '%Ti%'
+UNION ALL SELECT 'Ga', COUNT(*) FROM materials WHERE elements LIKE '%Ga%'
+UNION ALL SELECT 'Li', COUNT(*) FROM materials WHERE elements LIKE '%Li%'
+UNION ALL SELECT 'Co', COUNT(*) FROM materials WHERE elements LIKE '%Co%'
+UNION ALL SELECT 'Ni', COUNT(*) FROM materials WHERE elements LIKE '%Ni%'
+UNION ALL SELECT 'Ag', COUNT(*) FROM materials WHERE elements LIKE '%Ag%'
+ORDER BY frequency DESC
+--------------
+
++---------+-----------+
+| element | frequency |
++---------+-----------+
+| Ag      |        16 |
+| Si      |        16 |
+| O       |        14 |
+| Ga      |         3 |
+| Ti      |         2 |
+| Al      |         1 |
+| Fe      |         1 |
+| Li      |         1 |
+| Co      |         1 |
+| Ni      |         1 |
++---------+-----------+
+--------------
+SELECT 
+    elements as element_pair,
+    COUNT(*) as frequency,
+    ROUND(AVG(band_gap), 3) as avg_band_gap,
+    ROUND(AVG(formation_energy_per_atom), 3) as avg_formation_energy,
+    COUNT(CASE WHEN is_stable = 1 THEN 1 END) as stable_count,
+    GROUP_CONCAT(DISTINCT crystal_system ORDER BY crystal_system) as crystal_systems_found,
+    GROUP_CONCAT(DISTINCT material_id ORDER BY band_gap DESC LIMIT 3) as example_materials
+FROM materials 
+WHERE nelements = 2 
+    AND elements IS NOT NULL
+    AND elements NOT LIKE '%,%,%'  
+GROUP BY elements
+HAVING COUNT(*) > 1  
+ORDER BY frequency DESC, avg_formation_energy
+--------------
+
+--------------
+SELECT 
+    COUNT(DISTINCT elements) as unique_binary_pairs,
+    COUNT(*) as total_binary_materials,
+    ROUND(AVG(band_gap), 3) as avg_band_gap_binary,
+    ROUND(AVG(formation_energy_per_atom), 3) as avg_formation_energy_binary,
+    COUNT(CASE WHEN is_stable = 1 THEN 1 END) as stable_binary_count
+FROM materials 
+WHERE nelements = 2
+--------------
+
++---------------------+------------------------+---------------------+-----------------------------+---------------------+
+| unique_binary_pairs | total_binary_materials | avg_band_gap_binary | avg_formation_energy_binary | stable_binary_count |
++---------------------+------------------------+---------------------+-----------------------------+---------------------+
+|                   9 |                      9 |               2.304 |                      -1.970 |                   8 |
++---------------------+------------------------+---------------------+-----------------------------+---------------------+
+--------------
+SELECT 
+    material_id,
+    formula_pretty,
+    band_gap,
+    formation_energy_per_atom,
+    energy_above_hull,
+    space_group,
+    elements,
+    density,
+    volume,
+    CASE 
+        WHEN band_gap < 1.0 THEN 'Narrow gap'
+        WHEN band_gap < 2.0 THEN 'Medium gap'  
+        ELSE 'Wide gap'
+    END as semiconductor_type
+FROM materials 
+WHERE crystal_system = 'Hexagonal'
+    AND band_gap BETWEEN 0.1 AND 3.0
+    AND (formation_energy_per_atom < 0 OR is_stable = 1)
+    AND band_gap IS NOT NULL
+    AND formation_energy_per_atom IS NOT NULL
+ORDER BY band_gap, formation_energy_per_atom
+--------------
+
++-------------+----------------+----------+---------------------------+-------------------+-------------+----------+---------+---------+--------------------+
+| material_id | formula_pretty | band_gap | formation_energy_per_atom | energy_above_hull | space_group | elements | density | volume  | semiconductor_type |
++-------------+----------------+----------+---------------------------+-------------------+-------------+----------+---------+---------+--------------------+
+| mp-804      | GaN            |   1.7265 |                 -0.670049 |                 0 | NULL        | Ga,N     | 6.08098 | 45.7283 | Medium gap         |
+| mp-861867   | AcI3           |   2.5892 |                    -1.801 |                 0 | NULL        | Ac,I     |    NULL |    NULL | Wide gap           |
++-------------+----------------+----------+---------------------------+-------------------+-------------+----------+---------+---------+--------------------+
+--------------
+SELECT 
+    COUNT(*) as hexagonal_semiconductor_count,
+    ROUND(AVG(band_gap), 3) as avg_band_gap,
+    ROUND(AVG(formation_energy_per_atom), 3) as avg_formation_energy,
+    ROUND(MIN(band_gap), 3) as min_band_gap,
+    ROUND(MAX(band_gap), 3) as max_band_gap,
+    COUNT(CASE WHEN is_stable = 1 THEN 1 END) as confirmed_stable_count
+FROM materials 
+WHERE crystal_system = 'Hexagonal'
+    AND band_gap BETWEEN 0.1 AND 3.0
+    AND (formation_energy_per_atom < 0 OR is_stable = 1)
+--------------
+
++-------------------------------+--------------+----------------------+--------------+--------------+------------------------+
+| hexagonal_semiconductor_count | avg_band_gap | avg_formation_energy | min_band_gap | max_band_gap | confirmed_stable_count |
++-------------------------------+--------------+----------------------+--------------+--------------+------------------------+
+|                             2 |        2.158 |               -1.236 |        1.727 |        2.589 |                      2 |
++-------------------------------+--------------+----------------------+--------------+--------------+------------------------+
+--------------
+WITH element_stats AS (
+    SELECT 
+        nelements,
+        AVG(band_gap) as mean_band_gap,
+        STDDEV(band_gap) as stddev_band_gap,
+        COUNT(*) as group_size
+    FROM materials 
+    WHERE band_gap IS NOT NULL 
+        AND nelements IS NOT NULL
+    GROUP BY nelements
+    HAVING COUNT(*) >= 3  
+),
+anomalous_materials AS (
+    SELECT 
+        m.material_id,
+        m.formula_pretty,
+        m.band_gap,
+        m.nelements,
+        m.crystal_system,
+        m.formation_energy_per_atom,
+        e.mean_band_gap,
+        e.stddev_band_gap,
+        ROUND((m.band_gap - e.mean_band_gap) / e.stddev_band_gap, 2) as z_score
+    FROM materials m
+    JOIN element_stats e ON m.nelements = e.nelements
+    WHERE m.band_gap > e.mean_band_gap + 2 * e.stddev_band_gap
+        AND m.band_gap IS NOT NULL
+)
+SELECT 
+    material_id,
+    formula_pretty,
+    band_gap,
+    nelements,
+    crystal_system,
+    formation_energy_per_atom,
+    ROUND(mean_band_gap, 3) as group_mean_band_gap,
+    ROUND(stddev_band_gap, 3) as group_stddev_band_gap,
+    z_score as standard_deviations_above_mean
+FROM anomalous_materials
+ORDER BY z_score DESC
+--------------
+
++-------------+----------------+----------+-----------+----------------+---------------------------+---------------------+-----------------------+--------------------------------+
+| material_id | formula_pretty | band_gap | nelements | crystal_system | formation_energy_per_atom | group_mean_band_gap | group_stddev_band_gap | standard_deviations_above_mean |
++-------------+----------------+----------+-----------+----------------+---------------------------+---------------------+-----------------------+--------------------------------+
+| mp-149      | Si             |   0.6105 |         1 | Cubic          |                         0 |               0.089 |                 0.177 |                           2.95 |
+| mp-1196546  | Ag2Ge(S2O7)3   |   2.8072 |         4 | Trigonal       |                  -1.59995 |               1.558 |                 0.547 |                           2.28 |
+| mp-1143     | Al2O3          |   5.8537 |         2 | Trigonal       |                  -3.42655 |               2.304 |                 1.760 |                           2.02 |
++-------------+----------------+----------+-----------+----------------+---------------------------+---------------------+-----------------------+--------------------------------+
+--------------
+SELECT 
+    nelements as element_count,
+    COUNT(*) as materials_in_group,
+    ROUND(AVG(band_gap), 3) as mean_band_gap,
+    ROUND(STDDEV(band_gap), 3) as stddev_band_gap,
+    ROUND(MIN(band_gap), 3) as min_band_gap,
+    ROUND(MAX(band_gap), 3) as max_band_gap
+FROM materials 
+WHERE band_gap IS NOT NULL 
+    AND nelements IS NOT NULL
+GROUP BY nelements
+ORDER BY nelements
+--------------
+
++---------------+--------------------+---------------+-----------------+--------------+--------------+
+| element_count | materials_in_group | mean_band_gap | stddev_band_gap | min_band_gap | max_band_gap |
++---------------+--------------------+---------------+-----------------+--------------+--------------+
+|             1 |                 17 |         0.089 |           0.177 |        0.000 |        0.610 |
+|             2 |                  9 |         2.304 |           1.760 |        0.000 |        5.854 |
+|             3 |                  9 |         2.070 |           0.872 |        0.662 |        2.932 |
+|             4 |                  7 |         1.558 |           0.547 |        1.089 |        2.807 |
+|             5 |                  1 |         2.951 |           0.000 |        2.951 |        2.951 |
+|             6 |                  2 |         2.654 |           0.122 |        2.532 |        2.777 |
++---------------+--------------------+---------------+-----------------+--------------+--------------+
+--------------
+SELECT 
+    space_group,
+    COUNT(*) as total_materials,
+    COUNT(CASE WHEN band_gap = 0.0 THEN 1 END) as metallic_materials,
+    COUNT(CASE WHEN band_gap > 0.0 THEN 1 END) as non_metallic_materials,
+    ROUND(100.0 * COUNT(CASE WHEN band_gap = 0.0 THEN 1 END) / COUNT(*), 1) as metallic_percentage,
+    ROUND(AVG(band_gap), 3) as avg_band_gap,
+    GROUP_CONCAT(DISTINCT crystal_system) as crystal_systems,
+    GROUP_CONCAT(DISTINCT CASE WHEN band_gap = 0.0 THEN material_id END ORDER BY material_id LIMIT 3) as example_metals
+FROM materials 
+WHERE space_group IS NOT NULL 
+    AND band_gap IS NOT NULL
+GROUP BY space_group
+HAVING COUNT(*) >= 2  
+ORDER BY metallic_percentage DESC, total_materials DESC
+--------------
+
+--------------
+SELECT 
+    COUNT(*) as total_materials_with_bandgap,
+    COUNT(CASE WHEN band_gap = 0.0 THEN 1 END) as metallic_materials,
+    COUNT(CASE WHEN band_gap BETWEEN 0.1 AND 3.0 THEN 1 END) as semiconductor_materials,
+    COUNT(CASE WHEN band_gap > 3.0 THEN 1 END) as insulator_materials,
+    ROUND(100.0 * COUNT(CASE WHEN band_gap = 0.0 THEN 1 END) / COUNT(*), 1) as metallic_percentage
+FROM materials 
+WHERE band_gap IS NOT NULL
+--------------
+
++------------------------------+--------------------+-------------------------+---------------------+---------------------+
+| total_materials_with_bandgap | metallic_materials | semiconductor_materials | insulator_materials | metallic_percentage |
++------------------------------+--------------------+-------------------------+---------------------+---------------------+
+|                           45 |                 12 |                      29 |                   2 |                26.7 |
++------------------------------+--------------------+-------------------------+---------------------+---------------------+
+--------------
+SELECT 
+    crystal_system,
+    COUNT(*) as total_materials,
+    COUNT(CASE WHEN band_gap = 0.0 THEN 1 END) as metallic_count,
+    ROUND(100.0 * COUNT(CASE WHEN band_gap = 0.0 THEN 1 END) / COUNT(*), 1) as metallic_percentage
+FROM materials 
+WHERE crystal_system IS NOT NULL 
+    AND band_gap IS NOT NULL
+GROUP BY crystal_system
+ORDER BY metallic_percentage DESC
+--------------
+
++----------------+-----------------+----------------+---------------------+
+| crystal_system | total_materials | metallic_count | metallic_percentage |
++----------------+-----------------+----------------+---------------------+
+| Triclinic      |              12 |              8 |                66.7 |
+| Tetragonal     |               7 |              2 |                28.6 |
+| Cubic          |              10 |              2 |                20.0 |
+| Orthorhombic   |               3 |              0 |                 0.0 |
+| Monoclinic     |               8 |              0 |                 0.0 |
+| Hexagonal      |               2 |              0 |                 0.0 |
+| Trigonal       |               3 |              0 |                 0.0 |
++----------------+-----------------+----------------+---------------------+
+--------------
+SELECT 
+    'Total Materials' as metric,
+    COUNT(*) as value,
+    '' as details
+FROM materials
+UNION ALL
+SELECT 
+    'Crystal Systems',
+    COUNT(DISTINCT crystal_system),
+    GROUP_CONCAT(DISTINCT crystal_system ORDER BY crystal_system)
+FROM materials WHERE crystal_system IS NOT NULL
+UNION ALL
+SELECT 
+    'Metallic Materials',
+    COUNT(*),
+    CONCAT(ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM materials WHERE band_gap IS NOT NULL), 1), '%')
+FROM materials WHERE band_gap = 0.0
+UNION ALL
+SELECT 
+    'Semiconductor Materials', 
+    COUNT(*),
+    CONCAT(ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM materials WHERE band_gap IS NOT NULL), 1), '%')
+FROM materials WHERE band_gap BETWEEN 0.1 AND 3.0
+UNION ALL
+SELECT 
+    'Stable Materials',
+    COUNT(*),
+    CONCAT(ROUND(100.0 * COUNT(*) / (SELECT COUNT(*) FROM materials WHERE is_stable IS NOT NULL), 1), '%')
+FROM materials WHERE is_stable = 1
+--------------
+
++-------------------------+-------+-----------------------------------------------------------------------+
+| metric                  | value | details                                                               |
++-------------------------+-------+-----------------------------------------------------------------------+
+| Total Materials         |    45 |                                                                       |
+| Crystal Systems         |     7 | Cubic,Hexagonal,Monoclinic,Orthorhombic,Tetragonal,Triclinic,Trigonal |
+| Metallic Materials      |    12 | 26.7%                                                                 |
+| Semiconductor Materials |    29 | 64.4%                                                                 |
+| Stable Materials        |    17 | 37.8%                                                                 |
++-------------------------+-------+-----------------------------------------------------------------------+
