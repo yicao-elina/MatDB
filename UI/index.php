@@ -170,6 +170,9 @@
                     <button class="btn btn-outline-primary btn-sm w-100" data-bs-toggle="modal" data-bs-target="#customQueryModal">
                         <i class="fas fa-code"></i> Custom SQL Query
                     </button>
+                    <button class="btn btn-outline-success btn-sm w-100 mt-2" data-bs-toggle="modal" data-bs-target="#llmQueryModal">
+                        <i class="fas fa-language"></i> LLM Query
+                    </button>
                 </div>
             </div>
             
@@ -232,7 +235,48 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary" onclick="executeCustomQuery()">Execute Query</button>
+                    <button type="button" class="btn btn-primary" onclick="window.materialsDB.executeCustomQuery()">Execute Query</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="llmQueryModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">LLM Query</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="llm-query-input" class="form-label">
+                            Enter your request in English:
+                        </label>
+                        <textarea id="llm-query-input"
+                                  class="form-control"
+                                  rows="6"
+                                  placeholder="e.g. Find crystal systems with more than 5 materials, return the system name, material count, and average band gap."></textarea>
+                    </div>
+                    <div class="alert alert-info mb-0">
+                        <small>
+                            This is a placeholder for the LLM interface.
+                            For now, submitting will show a test message:
+                            <code>test for LLM</code>.
+                        </small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+                    <button type="button"
+                            class="btn btn-success"
+                            onclick="window.materialsDB.runLLMTest()">
+                        Run (LLM Test)
+                    </button>
                 </div>
             </div>
         </div>

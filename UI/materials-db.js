@@ -1,5 +1,5 @@
 // materials-db.js
-
+console.log("materials-db.js version LLM-TEST loaded");
 class MaterialsDB {
     constructor() {
         this.currentQuery = null;
@@ -244,6 +244,107 @@ class MaterialsDB {
                 </div>
             </div>
         `;
+    }
+
+    async runLLMTest() {
+        const textarea = document.getElementById('llm-query-input');
+        const userInput = textarea ? textarea.value.trim() : '';
+
+        if (!userInput) {
+            alert('Please enter a question for the LLM.');
+            return;
+        }
+        const modalEl = document.getElementById('llmQueryModal');
+        if (modalEl && window.bootstrap && bootstrap.Modal) {
+            const instance = bootstrap.Modal.getInstance(modalEl) || new bootstrap.Modal(modalEl);
+            instance.hide();
+        }
+
+        const loadingEl = document.getElementById('loading');
+        if (loadingEl) loadingEl.style.display = 'block';
+        
+        const resultsContainer = document.getElementById('results-container');
+        if (resultsContainer) resultsContainer.innerHTML = '';
+
+        try {
+            const response = await fetch('llm.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ question: userInput })
+            });
+
+            const data = await response.json();
+            if (loadingEl) loadingEl.style.display = 'none';
+
+            if (!data.success) {
+                this.showError(data.error || 'Unknown error from LLM backend.');
+                return;
+            }
+
+            const answer = data.answer || '(no answer returned)';
+        
+            this.lastGeneratedSQL = answer;
+            if (resultsContainer) {
+                resultsContainer.innerHTML = `
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <i class="fas fa-robot"></i> LLM SQL Generated
+                        </div>
+                        <div class="card-body">
+                            <p class="mb-2"><strong>Your Question:</strong></p>
+                            <p class="text-muted border-bottom pb-2">${userInput}</p>
+                            
+                            <p class="mb-2"><strong>Generated SQL:</strong></p>
+                            <pre class="bg-light p-3 border rounded" style="white-space: pre-wrap; font-family: monospace;">${answer}</pre>
+                            
+                            <div class="mt-3">
+                                <button class="btn btn-primary" onclick="window.materialsDB.executeGeneratedSQL()">
+                                    <i class="fas fa-play"></i> Execute This Query
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            this.currentResults = null;
+
+        } catch (err) {
+            if (loadingEl) loadingEl.style.display = 'none';
+            this.showError('Network error: ' + err.message);
+        }
+    }
+
+    async executeGeneratedSQL() {
+        const sql = this.lastGeneratedSQL;
+        
+        if (!sql) {
+            alert('No SQL query found to execute.');
+            return;
+        }
+        
+        this.showLoading();
+        
+        try {
+            const response = await fetch('api.php?action=custom', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ sql: sql })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                this.currentResults = data.results;
+                this.displayCustomResults(data, sql);
+            } else {
+                this.showError(data.error);
+            }
+        } catch (error) {
+            this.showError('Execution error: ' + error.message);
+        }
     }
 }
 
