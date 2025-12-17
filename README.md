@@ -1,6 +1,12 @@
 # Materials Project Database Pipeline
 
+
 A comprehensive pipeline for collecting, processing, and storing materials science data from the Materials Project API into a MySQL database using modern SQLAlchemy 2.0.
+
+## 📽️ Demo & Resources
+
+- **Demo Video:** [YouTube](https://youtu.be/x1YsIhOLkNQ)
+- **Source Code:** This repository
 
 ## 📋 Table of Contents
 
