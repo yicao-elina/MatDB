@@ -18,6 +18,7 @@ A comprehensive pipeline for collecting, processing, and storing materials scien
 - [Database Import](#database-import)
 - [Database Statistics](#database-statistics)
 - [Usage Examples](#usage-examples)
+- [LLM Query Interface](#llm-query-interface)
 - [API Reference](#api-reference)
 
 ## 🎯 Overview
@@ -421,7 +422,25 @@ plt.xlabel('Band Gap (eV)')
 plt.ylabel('Count')
 plt.title('Band Gap Distribution')
 plt.show()
+
 ```
+
+## 🤖 LLM Query Interface
+
+In addition to hand-written SQL, this project includes a web UI feature to query the database in natural language and optionally execute the generated SQL.
+
+### How it works
+
+- The web UI (`UI/index.php`) exposes an **"LLM Query"** button in the left sidebar.
+- When you click it, a modal prompts you to **enter your request in English**, e.g.  
+  "Find crystal systems with more than 5 materials, return the system name, material count, and average band gap."
+- The backend sends this request to a large language model (via `llm.php` / `llm_qa.py`), which returns a **read-only SQL `SELECT` statement** tailored to our `materials` schema.
+- The LLM output is shown in the *Query Results* panel. Beneath the SQL, an **“Execute this SQL”** button lets you:
+  1. Copy the generated SQL into the existing *Custom SQL Query* pipeline, and  
+  2. Run it through `api.php?action=custom` to execute directly on the MySQL database.
+- The query result is then rendered as a table in the same panel, using the exact same rendering logic as manual custom queries.
+
+> Note: The backend enforces that only `SELECT` statements are executed for safety; non-`SELECT` queries returned by the LLM are rejected.
 
 ## 🔧 API Reference
 
